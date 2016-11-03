@@ -1,0 +1,20 @@
+<div class="productName"> <%= @product.name %> </div>
+<div class="productDescription"> <%= @product.description %> </div>
+<%= link_to "Next Product", "#", data: {id: @product.id}, class: "js-next" %>
+<%# <a href="#" class="js-next" data-id="<%= @product.id %1>">Next Product</a> %>
+
+<script type="text/javascript" charset="utf-8">
+  $(function(){
+    $(".js-next").on("click", function(){
+      var nextID = parseInt($(".js-next").attr("data-id")) + 1;
+      $.get("/products/" + nextID + "/data", function(data) {
+        // assign values
+        $(".productName").text(data["name"]);
+        $(".productDescription").text(data["description"]);
+
+        // reset the id to current product"s id
+        $(".js-next").attr("data-id", data["id"]);
+      });
+    });
+  });
+</script>
